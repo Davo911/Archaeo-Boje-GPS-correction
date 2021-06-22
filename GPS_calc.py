@@ -20,7 +20,7 @@ def add_offset(GPS_obj, ang, os):
 
     return GPS_new_data
 
-#cable length TODO: MAKE IT AN ARGUMENT
+#cable length                                                               TODO: MAKE IT AN ARGUMENT
 string_length = 2.0 
 
 # Start MavProxy
@@ -43,31 +43,41 @@ sock = socket.socket(socket.AF_INET, # Internet
 print "Connecting..."
 connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
-boje = connect(connection_boje, wait_ready=True)
-boot = connect(connection_boot, wait_ready=True)
+
+try:
+    boje = connect(connection_boje, wait_ready=True)
+except Exception:
+    print("Connection Error to Boje-FC")
+#try:
+#    boot = connect(connection_boot, wait_ready=True)
+#except Exception:
+#    print("Connection Error to Boot-FC")
+
 while True:
     try:
-        depth = boot.location.global_relative_frame.alt
-        offset = sqrt((string**2)-(depth**2))       
-        compass_boot = boot.heading
+        #depth = boot.location.global_relative_frame.alt
+        depth = 1.5
+        offset = math.sqrt((string_length**2)-(depth**2))       
+        #compass_boot = boot.heading
         compass_boje = boje.heading
-        speed_boot = boot.groundspeed
+        speed_boot = 1 #boot.groundspeed
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
-        angle = math.toRadians(50)                 #TODO: calculate angle from compasses
+        angle = compass_boje                                    #TODO: calculate angle from compasses
+        print("offset: "+str(offset))
+        print("compass: "+str(compass_boje))
+        print("speed: "+str(speed_boje))
+        print("GPSdata: "+str(GPS_boje_data))
         
         if (roughly_equal(speed_boje, speed_boot)) :
             GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
             bytestosend = bytes(newmsg)
             sock.sendto(bytestosend, (BOOT_IP, UDP_PORT))
 
-    except serial.SerialException as e:
-        print('Device error: {}'.format(e))
-        break
     except pynmea2.ParseError as e:
         print('Parse error: {}'.format(e))
         continue
-    except serial.error:
+    except serial.SerialException:
         print("Couldnt send to the socket-server")
         continue
     except KeyboardInterrupt:
