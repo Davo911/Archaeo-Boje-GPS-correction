@@ -6,6 +6,7 @@ import pynmea2
 
 def roughly_equal(a,b):
     #TODO: SMARTER LOGIC
+    
     return a==b
 
 def add_offset(GPS_obj, ang, os):
@@ -32,6 +33,10 @@ time.sleep(5)
 # Setup GPS serial port
 port_GPS = "/dev/serial0"
 ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
+
+#GC socket
+BOOT_IP = "192.168.2.1"
+UDP_PORT = 27000
 
 # Open socket to Boot-pi
 BOOT_IP = "192.168.2.2"
@@ -64,12 +69,14 @@ while True:
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
         angle = compass_boje                                    #TODO: calculate angle from compasses
+        print("Battery: %s" % boje.battery)
         print("offset: "+str(offset))
         print("compass: "+str(compass_boje))
         print("speed: "+str(speed_boje))
         print("GPSdata: "+str(GPS_boje_data))
         
-        if (roughly_equal(speed_boje, speed_boot)) :
+        
+        if (roughly_equal(speed_boje, speed_boot) and (compass_boot - compass_boje) < 5 ) :
             GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
             bytestosend = bytes(newmsg)
             sock.sendto(bytestosend, (BOOT_IP, UDP_PORT))
