@@ -37,11 +37,13 @@ ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
 #GC socket
 BOOT_IP = "192.168.2.1"
 UDP_PORT = 27000
+sock_gc = socket.socket(socket.AF_INET, # Internet
+                     socket.SOCK_DGRAM) # UDP
 
 # Open socket to Boot-pi
 BOOT_IP = "192.168.2.2"
 UDP_PORT = 27000
-sock = socket.socket(socket.AF_INET, # Internet
+sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Connect to the MavProxies
@@ -53,22 +55,22 @@ try:
     boje = connect(connection_boje, wait_ready=True)
 except Exception:
     print("Connection Error to Boje-FC")
-#try:
-#    boot = connect(connection_boot, wait_ready=True)
-#except Exception:
-#    print("Connection Error to Boot-FC")
+try:
+    boot = connect(connection_boot, wait_ready=True)
+except Exception:
+    print("Connection Error to Boot-FC")
 
 while True:
     try:
-        #depth = boot.location.global_relative_frame.alt
+        depth = boot.location.global_relative_frame.alt
         depth = 1.5
         offset = math.sqrt((string_length**2)-(depth**2))       
-        #compass_boot = boot.heading
+        compass_boot = boot.heading
         compass_boje = boje.heading
         speed_boot = 1 #boot.groundspeed
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
-        angle = compass_boje                                    #TODO: calculate angle from compasses
+        angle = Math.toRadians(compass_boje)                                    #TODO: HOW DO WE GET THIS ANGLE???! --> north/east: Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
         print("Battery: %s" % boje.battery)
         print("offset: "+str(offset))
         print("compass: "+str(compass_boje))
@@ -76,10 +78,13 @@ while True:
         print("GPSdata: "+str(GPS_boje_data))
         
         
-        if (roughly_equal(speed_boje, speed_boot) and (compass_boot - compass_boje) < 5 ) :
+        if (roughly_equal(speed_boje, speed_boot) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
             GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
-            bytestosend = bytes(newmsg)
-            sock.sendto(bytestosend, (BOOT_IP, UDP_PORT))
+            bytestosend = bytes(str(GPS_boot_new))
+            #send corrected data to uboot
+            sock_boot.sendto(bytestosend, (BOOT_IP, UDP_PORT))
+            #send og data
+            sock_gc.sendto(bytes(str(GPS_boje_data)))
 
     except pynmea2.ParseError as e:
         print('Parse error: {}'.format(e))
