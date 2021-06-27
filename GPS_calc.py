@@ -70,7 +70,7 @@ while True:
         speed_boot = 1 #boot.groundspeed
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
-        angle = Math.toRadians(compass_boje)                                    #TODO: HOW DO WE GET THIS ANGLE???! --> north/east: Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
+        angle = Math.toRadians(compass_boje)                                    #TODO: HOW DO WE GET THIS ANGLE???! --> north/east = Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
         print("Battery: %s" % boje.battery)
         print("offset: "+str(offset))
         print("compass: "+str(compass_boje))
@@ -80,9 +80,9 @@ while True:
         
         if (roughly_equal(speed_boje, speed_boot) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
             GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
-            bytestosend = bytes(str(GPS_boot_new))
+
             #send corrected data to uboot
-            sock_boot.sendto(bytestosend, (BOOT_IP, UDP_PORT))
+            sock_boot.sendto(bytes(str(GPS_boot_new)), (BOOT_IP, UDP_PORT))
             #send og data
             sock_gc.sendto(bytes(str(GPS_boje_data)))
 
