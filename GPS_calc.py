@@ -3,6 +3,7 @@ from pymavlink import mavutil
 import io, time, sys, argparse, math, serial, socket, math
 from subprocess import Popen
 import pynmea2
+import pyproj
 
 def roughly_equal(a,b):
     #TODO: SMARTER LOGIC
@@ -21,8 +22,20 @@ def add_offset(GPS_obj, ang, os):
 
     return GPS_new_data
 
-#cable length                                                               TODO: MAKE IT AN ARGUMENT
-string_length = 2.0 
+def parseArguments():
+    if len(sys.argv)>1 and sys.argv[1].split("=")[0]=="-s":
+    try:
+        string_length = float(sys.argv[1].split("=")[1])
+    except ValueError:
+        print("No String length defined ( -s=2.0 )")
+        string_length = 2.0
+    else:
+        print("No String length defined ( -s=2.0 )2")
+        string_length = 2.0
+
+    print("String length:"+str(string_length))
+
+
 
 # Start MavProxy
 print "Start MavProxy Server..."
@@ -67,7 +80,7 @@ while True:
         offset = math.sqrt((string_length**2)-(depth**2))       
         compass_boot = boot.heading
         compass_boje = boje.heading
-        speed_boot = 1 #boot.groundspeed
+        speed_boot = boot.groundspeed
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
         angle = Math.toRadians(compass_boje)                                    #TODO: HOW DO WE GET THIS ANGLE???! --> north/east = Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
