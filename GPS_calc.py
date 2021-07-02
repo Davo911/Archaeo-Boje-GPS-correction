@@ -2,7 +2,7 @@ from dronekit import connect, Command, LocationGlobal
 from pymavlink import mavutil
 import io, time, sys, argparse, math, serial, socket, math
 from subprocess import Popen
-import pynmea2
+import pynmea2, pyproj
 
 def roughly_equal(a,b):
     #TODO: SMARTER LOGIC
@@ -67,7 +67,7 @@ while True:
         offset = math.sqrt((string_length**2)-(depth**2))       
         compass_boot = boot.heading
         compass_boje = boje.heading
-        speed_boot = 1 #boot.groundspeed
+        speed_boot = boot.groundspeed
         speed_boje = boje.groundspeed
         GPS_boje_data = pynmea2.parse(ser.readline())
         angle = Math.toRadians(compass_boje)                                    #TODO: HOW DO WE GET THIS ANGLE???! --> north/east = Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
