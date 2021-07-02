@@ -2,8 +2,12 @@ from dronekit import connect, Command, LocationGlobal
 from pymavlink import mavutil
 import io, time, sys, argparse, math, serial, socket, math
 from subprocess import Popen
+<<<<<<< HEAD
 import pynmea2
 import pyproj
+=======
+import pynmea2, pyproj
+>>>>>>> 8a6ed8004c7275bda92134f85ae1972987c6d916
 
 def roughly_equal(a,b):
     #TODO: SMARTER LOGIC
