@@ -41,7 +41,7 @@ def add_offset(GPS_obj, ang, os):
     #('Units of Geoidal Separation (meters)', 'geo_sep_units'),
     #('Age of Differential GPS Data (secs)', 'age_gps_data'),
     #('Differential Reference Station ID', 'ref_station_id'),
-          
+    ####### http://www.hiddenvision.co.uk/ez/      
     GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', '5102.140', 'N', '01344.177', 'E', '1', '12', '1.0', '0.0', 'M', '0.0', 'M', '', '*68'))
 
     return GPS_new_data
@@ -123,7 +123,7 @@ while True:
                     #send og data
                     sock_gc.sendto(bytes(str(GPS_boje_data)))
 
-            
+        
             #except KeyboardInterrupt:
                 #ctrl+c cleanup
                 
