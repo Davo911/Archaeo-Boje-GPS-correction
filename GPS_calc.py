@@ -91,8 +91,8 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
 gps_timestamp = 0
 @boje.on_message('GPS_INPUT')
-    def listener(self, name, message):
-        gps_timestamp = message.time_usec
+def listener(self, name, message):
+    gps_timestamp = message.time_usec
 
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
