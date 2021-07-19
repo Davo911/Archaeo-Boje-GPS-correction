@@ -95,7 +95,7 @@ boje.wait_ready(True, timeout=180)
 
 while True:
     time.sleep(2)
-    print(str(boje.location.global_frame.lat))
+    print("lat: "+str(boje.location.global_frame.latitude))
     
 #    try:
 #        depth = boot.location.global_relative_frame.alt
