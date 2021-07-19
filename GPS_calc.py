@@ -40,7 +40,7 @@ def add_offset(GPS_obj, ang, os):
     #('Differential Reference Station ID', 'ref_station_id'),
     ####### http://www.hiddenvision.co.uk/ez/
     
-    GPS_boje = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))      
+    #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', 'lat', 'lat_dir','lon', 'lon_dir', 'gps_qual', 'num_sats', 'horizontal_dil', 'altitude', 'altitude_units', 'geo_sep', 'geo_sep_units', 'age_gps_data', 'ref_station_id'))      
     
     GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))
 
@@ -98,9 +98,13 @@ boje.wait_ready(True, timeout=180)
 
 while True:
     time.sleep(2)
-    print("lat: "+str(boje.location.global_frame.time_usec))
-    
-#    try:
+    print("lat: "+str(boje.location.global_frame))
+    lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
+    lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
+    @boje.on_message('SYSTEM_TIME')
+    def listener(self, name, message):
+        print(message.time_unix_usec)
+    #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', str(boje.location.global_frame.lat), lat_dir,str(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', 'geo_sep', 'M', 'age_gps_data', 'ref_station_id'))      #    try:
 #        depth = boot.location.global_relative_frame.alt
 #        compass_boot = boot.heading
 #        speed_boot = boot.groundspeed
