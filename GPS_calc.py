@@ -89,8 +89,10 @@ connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
 boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
-
-
+gps_timestamp = 0
+@boje.on_message('GPS_INPUT')
+    def listener(self, name, message):
+        gps_timestamp = message.time_usec
 
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
@@ -102,12 +104,8 @@ while True:
     print("lat: "+str(boje.location.global_frame))
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
-    @boje.on_message('SYSTEM_TIME')
-    def listener(self, name, message):
-        print("Time: "+str(message.time_unix_usec))
-#    @boje.on_message('GPS_INPUT')
-#    def listener(self, name, message):
-#        print("Time: "+message.time_usec)
+    print("time= "+str(gps_timestamp))
+#    
     #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', str(boje.location.global_frame.lat), lat_dir,str(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', 'geo_sep', 'M', 'age_gps_data', 'ref_station_id'))      #    try:
 #        depth = boot.location.global_relative_frame.alt
 #        compass_boot = boot.heading
