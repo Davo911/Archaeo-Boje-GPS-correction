@@ -38,7 +38,10 @@ def add_offset(GPS_obj, ang, os):
     #('Units of Geoidal Separation (meters)', 'geo_sep_units'),
     #('Age of Differential GPS Data (secs)', 'age_gps_data'),
     #('Differential Reference Station ID', 'ref_station_id'),
-    ####### http://www.hiddenvision.co.uk/ez/      
+    ####### http://www.hiddenvision.co.uk/ez/
+    
+    GPS_boje = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))      
+    
     GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))
 
     return GPS_new_data
@@ -95,7 +98,7 @@ boje.wait_ready(True, timeout=180)
 
 while True:
     time.sleep(2)
-    print("lat: "+str(boje.location.global_frame.lat))
+    print("lat: "+str(boje.location.global_frame.time_usec))
     
 #    try:
 #        depth = boot.location.global_relative_frame.alt
