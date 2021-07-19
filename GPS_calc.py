@@ -103,7 +103,7 @@ while True:
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
     @boje.on_message('GPS_INPUT')
-    def getTime(self, name, message):
+    def listener(self, name, message):
         print("Time: "+message.time_usec)
     #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', str(boje.location.global_frame.lat), lat_dir,str(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', 'geo_sep', 'M', 'age_gps_data', 'ref_station_id'))      #    try:
 #        depth = boot.location.global_relative_frame.alt
