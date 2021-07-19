@@ -65,8 +65,8 @@ print ("Start MavProxy Server...")
 #time.sleep(5)
 
 # Setup GPS serial port
-port_GPS = "/dev/ttyAMA0"
-ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
+#port_GPS = "/dev/ttyAMA0"
+#ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
 
 #GC socket
 BOOT_IP = "192.168.2.1"
@@ -85,7 +85,8 @@ print ("Connecting...")
 connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
 boje = connect(connection_boje,"baud=57600", wait_ready=False)
-#boje.wait_ready(True, timeout=180)
+boje.wait_ready(True, timeout=180)
+
 
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
@@ -94,53 +95,56 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 
 while True:
     time.sleep(2)
-    try:
-        depth = boot.location.global_relative_frame.alt
-        compass_boot = boot.heading
-        speed_boot = boot.groundspeed
-        GPS_boje_data = pynmea2.parse(ser.readline())
-        depth = 1.5
-        offset = math.sqrt((string_length**2)-(depth**2))       
-        compass_boje = boje.heading
-        speed_boje = boje.groundspeed
-        angle = Math.toRadians(compass_boot)
-        print("Battery: %s" % boje.battery)
-        #print("offset: "+str(offset))
-        print("compass: "+str(compass_boje))
-        print("speed: "+str(speed_boje))
-        print("GPS: %s" % boje.gps_0)
-        print("Location: %s" % boje.location.global_frame)
-
-        if (math.isclose(speed_boje, speed_boot,rel_tol=0.2) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
-                    GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
-
-                    #send corrected data to uboot
-                    sock_boot.sendto(bytes(str(GPS_boot_new)), (BOOT_IP, UDP_PORT))
-                    #send og data
-                    sock_gc.sendto(bytes(str(GPS_boje_data)))
-
-        
-            #except KeyboardInterrupt:
-                #ctrl+c cleanup
-                
-                #server_proc.kill()
-
-
-            # Display basic boje state
-            #print "==========SAMPLE VALUES=========="
-            #print " Type: %s" %boje._vehicle_type
-            #print " Armed: %s" % boje.armed
-            #print " System status: %s" % boje.system_status.state
-            #print " GPS: %s" % boje.gps_0
-            #print " Alt: %s" % boje.location.global_relative_frame.alt
-            #print " Battery: %s" % boje.battery
-            #print " Groundspeed : %s" % boje.groundspeed
-            #print " heading : %s" % boje.heading
-            #print "================================="
-            #time.sleep(3)
-    except pynmea2.ParseError as e:
-        print('Parse error: {}'.format(e))
-        continue
-    except serial.SerialException:
-        print("Couldnt send to the socket-server")
-        continue
+    print(str(boje.location.global_frame))
+    
+#    try:
+#        depth = boot.location.global_relative_frame.alt
+#        compass_boot = boot.heading
+#        speed_boot = boot.groundspeed
+#        #GPS_boje_data = pynmea2.parse(ser.readline())
+#        GPS_boje_data = pynmea2.parse()
+#        depth = 1.5
+#        offset = math.sqrt((string_length**2)-(depth**2))       
+#        compass_boje = boje.heading
+#        speed_boje = boje.groundspeed
+#        angle = Math.toRadians(compass_boot)
+#        print("Battery: %s" % boje.battery)
+#        #print("offset: "+str(offset))
+#        print("compass: "+str(compass_boje))
+#        print("speed: "+str(speed_boje))
+#        print("GPS: %s" % boje.gps_0)
+#        print("Location: %s" % boje.location.global_frame)
+#
+#        if (math.isclose(speed_boje, speed_boot,rel_tol=0.2) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
+#                    GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
+#
+#                    #send corrected data to uboot
+#                    sock_boot.sendto(bytes(str(GPS_boot_new)), (BOOT_IP, UDP_PORT))
+#                    #send og data
+#                    sock_gc.sendto(bytes(str(GPS_boje_data)))
+#
+#        
+#            #except KeyboardInterrupt:
+#                #ctrl+c cleanup
+#                
+#                #server_proc.kill()
+#
+#
+#            # Display basic boje state
+#            #print "==========SAMPLE VALUES=========="
+#            #print " Type: %s" %boje._vehicle_type
+#            #print " Armed: %s" % boje.armed
+#            #print " System status: %s" % boje.system_status.state
+#            #print " GPS: %s" % boje.gps_0
+#            #print " Alt: %s" % boje.location.global_relative_frame.alt
+#            #print " Battery: %s" % boje.battery
+#            #print " Groundspeed : %s" % boje.groundspeed
+#            #print " heading : %s" % boje.heading
+#            #print "================================="
+#            #time.sleep(3)
+#    except pynmea2.ParseError as e:
+#        print('Parse error: {}'.format(e))
+#        continue
+#    #except serial.SerialException:
+#    #    print("Couldnt send to the socket-server")
+#    #    continue
