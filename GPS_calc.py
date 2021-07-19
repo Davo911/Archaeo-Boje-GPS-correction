@@ -84,7 +84,7 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
 print ("Connecting...")
 connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
-boje = connect(connection_boje,"baud=57600", wait_ready=False)
+boje = connect(connection_boje,"baud=57600", wait_ready=True)
 #boje.wait_ready(True, timeout=180)
 
 
