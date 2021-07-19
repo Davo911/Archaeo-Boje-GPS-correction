@@ -60,9 +60,9 @@ def parseArguments():
 
 # Start MavProxy
 print ("Start MavProxy Server...")
-logfile = open("./mavprxy.log", "w")
-server_proc = Popen(["mavproxy.py", "--out", "127.0.0.1:14550"], shell=True,stdout=logfile)
-time.sleep(5)
+#logfile = open("./mavprxy.log", "w")
+#server_proc = Popen(["mavproxy.py", "--out", "127.0.0.1:14550"], shell=True,stdout=logfile)
+#time.sleep(5)
 
 # Setup GPS serial port
 #port_GPS = "/dev/ttyAMA0"
@@ -84,8 +84,8 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
 print ("Connecting...")
 connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
-boje = connect(connection_boje,"baud=57600", wait_ready=False)
-boje.wait_ready(True, timeout=180)
+boje = connect(connection_boje,"baud=57600", wait_ready=True)
+#boje.wait_ready(True, timeout=180)
 
 
 #try:
