@@ -10,23 +10,20 @@ def decTodms(deg):
      md = abs(deg - d) * 60
      m = int(md)
      s = (md - m) * 60
-     return [d, m, s]
-
-def roughly_equal(a,b):
-    #TODO: SMARTER LOGIC
-    return a==b
+     return "{:03d}{:07.4f}".format(d, m + (s / 60))
 
 def add_offset(GPS_obj, ang, os):
 
     #CALCULATION
     lat0 = math.cos(math.PI / 180.0 * lat)
     lng_new = GPS_obj.longitude + (180/math.PI) * (os / 6378137)/math.cos(lat0) * math.cos(ang)
-    lat_new = GPS_obj.latitude + (180/math.PI) * (os / 6378137) * math.sin(angle)
-
-    #TODO:GENERATE & RETURN NEW GPS OBJECT
+    lat_new = GPS_obj.latitude + (180/math.PI) * (os / 6378137) * math.sin(ang)
     #     
     #$GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68
-    #Latitude=51.0355758333and Longitude=13.7360121667    
+
+    # 5102.140N; 01344.177,E
+    # Latitude=51.0355758333and Longitude=13.7360121667    
+
     # ('Timestamp', 'timestamp', timestamp),
     #('Latitude', 'lat'),
     #('Latitude Direction', 'lat_dir'),
@@ -42,7 +39,7 @@ def add_offset(GPS_obj, ang, os):
     #('Age of Differential GPS Data (secs)', 'age_gps_data'),
     #('Differential Reference Station ID', 'ref_station_id'),
     ####### http://www.hiddenvision.co.uk/ez/      
-    GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', '5102.140', 'N', '01344.177', 'E', '1', '12', '1.0', '0.0', 'M', '0.0', 'M', '', '*68'))
+    GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))
 
     return GPS_new_data
 
@@ -98,16 +95,15 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 while True:
     time.sleep(2)
     try:
-#        depth = boot.location.global_relative_frame.alt
-#        compass_boot = boot.heading
-#        speed_boot = boot.groundspeed
-#        GPS_boje_data = pynmea2.parse(ser.readline())
+        depth = boot.location.global_relative_frame.alt
+        compass_boot = boot.heading
+        speed_boot = boot.groundspeed
+        GPS_boje_data = pynmea2.parse(ser.readline())
         depth = 1.5
-        #offset = math.sqrt((string_length**2)-(depth**2))       
+        offset = math.sqrt((string_length**2)-(depth**2))       
         compass_boje = boje.heading
         speed_boje = boje.groundspeed
-        #angle = Math.toRadians(compass_boje)
-                                            #TODO: HOW DO WE GET THIS ANGLE???! --> north/east = Math.toRadians(45 * (2 * n - 1)); | where n = [1, 2, 3, 
+        angle = Math.toRadians(compass_boot)
         print("Battery: %s" % boje.battery)
         #print("offset: "+str(offset))
         print("compass: "+str(compass_boje))
@@ -115,7 +111,7 @@ while True:
         print("GPS: %s" % boje.gps_0)
         print("Location: %s" % boje.location.global_frame)
 
-        if (roughly_equal(speed_boje, speed_boot) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
+        if (math.isclose(speed_boje, speed_boot,rel_tol=0.2) and (compass_boot - compass_boje) < 5 ) : #roughly same speed in same direction
                     GPS_boot_new = add_offset(GPS_boje_data, angle, offset)
 
                     #send corrected data to uboot

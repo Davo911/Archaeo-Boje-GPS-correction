@@ -9,14 +9,16 @@ def decTodms(deg):
      md = abs(deg - d) * 60
      m = int(md)
      s = (md - m) * 60
-     return [d, m, s]
+     return "{:03d}{:07.4f}".format(d, m + (s/60))
+     #return [d, m, s]
 
-#$GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68
-#Latitude=51.0355758333and Longitude=13.7360121667
+    # DMS:          510208.07294,N; 0134409.6438,E
+    # DDDMM.MMMM:   5102.140N; 01344.177,E
+    # Decimal:      Latitude=51.0355758333; Longitude=13.7360121667
 lat = 51.0355758333
 lng = 13.7360121667
 lat_dms = decTodms(lat)
 lng_dms = decTodms(lng)
 
-print(str(lat_dms))
-print(str(lng_dms))
+print(lat_dms)
+print(lng_dms)
