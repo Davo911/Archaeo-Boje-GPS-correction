@@ -104,7 +104,7 @@ while True:
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
     @boje.on_message('SYSTEM_TIME')
     def listener(self, name, message):
-        print("Time: "+message.time_unix_usec)
+        print("Time: "+str(message.time_unix_usec))
 #    @boje.on_message('GPS_INPUT')
 #    def listener(self, name, message):
 #        print("Time: "+message.time_usec)
