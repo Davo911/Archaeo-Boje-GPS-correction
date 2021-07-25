@@ -18,28 +18,29 @@ def add_offset(GPS_obj, ang, os):
     lat0 = math.cos(math.PI / 180.0 * lat)
     lng_new = GPS_obj.longitude + (180/math.PI) * (os / 6378137)/math.cos(lat0) * math.cos(ang)
     lat_new = GPS_obj.latitude + (180/math.PI) * (os / 6378137) * math.sin(ang)
-    #     
-    #$GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68
 
-    # 5102.140N; 01344.177,E
-    # Latitude=51.0355758333and Longitude=13.7360121667    
+    """ 
+    $GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68
 
-    # ('Timestamp', 'timestamp', timestamp),
-    #('Latitude', 'lat'),
-    #('Latitude Direction', 'lat_dir'),
-    #('Longitude', 'lon'),
-    #('Longitude Direction', 'lon_dir'),
-    #('GPS Quality Indicator', 'gps_qual', int),
-    #('Number of Satellites in use', 'num_sats'),
-    #('Horizontal Dilution of Precision', 'horizontal_dil'),
-    #('Antenna Alt above sea level (mean)', 'altitude', float),
-    #('Units of altitude (meters)', 'altitude_units'),
-    #('Geoidal Separation', 'geo_sep'),
-    #('Units of Geoidal Separation (meters)', 'geo_sep_units'),
-    #('Age of Differential GPS Data (secs)', 'age_gps_data'),
-    #('Differential Reference Station ID', 'ref_station_id'),
-    ####### http://www.hiddenvision.co.uk/ez/
-    
+    5102.140N; 01344.177,E
+    Latitude=51.0355758333and Longitude=13.7360121667    
+
+    ('Timestamp', 'timestamp', timestamp),
+    ('Latitude', 'lat'),
+    ('Latitude Direction', 'lat_dir'),
+    ('Longitude', 'lon'),
+    ('Longitude Direction', 'lon_dir'),
+    ('GPS Quality Indicator', 'gps_qual', int),
+    ('Number of Satellites in use', 'num_sats'),
+    ('Horizontal Dilution of Precision', 'horizontal_dil'),
+    ('Antenna Alt above sea level (mean)', 'altitude', float),
+    ('Units of altitude (meters)', 'altitude_units'),
+    ('Geoidal Separation', 'geo_sep'),
+    ('Units of Geoidal Separation (meters)', 'geo_sep_units'),
+    ('Age of Differential GPS Data (secs)', 'age_gps_data'),
+    ('Differential Reference Station ID', 'ref_station_id'),
+    # ###### http://www.hiddenvision.co.uk/ez/
+    """
     #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', 'lat', 'lat_dir','lon', 'lon_dir', 'gps_qual', 'num_sats', 'horizontal_dil', 'altitude', 'altitude_units', 'geo_sep', 'geo_sep_units', 'age_gps_data', 'ref_station_id'))      
     
     GPS_new_data = pynmea2.GGA('GP', 'GGA', ('102311.996', decTodms(lat_new), GPS_obj.lat_dir,decTodms(lng_new), GPS_obj.lon_dir, GPS_obj.gps_qual, str(GPS_obj.num_sats), str(GPS_obj.horizontal_dil), str(GPS_obj.altitude), str(GPS_obj.altitude_units), str(GPS_obj.geo_sep), str(GPS_obj.geo_sep_units), str(GPS_obj.age_gps_data), str(GPS_obj.ref_station_id)))
@@ -54,7 +55,7 @@ def parseArguments():
             print("No String length defined ( -s=2.0 )")
             string_length = 2.0
     else:
-        print("No String length defined ( -s=2.0 )2")
+        print("No String length defined ( -s=2.0 ) -2")
         string_length = 2.0
 
     print("String length:"+str(string_length))
@@ -62,7 +63,7 @@ def parseArguments():
 
 
 # Start MavProxy
-print ("Start MavProxy Server...")
+#print ("Start MavProxy Server...")
 #logfile = open("./mavprxy.log", "w")
 #server_proc = Popen(["mavproxy.py", "--out", "127.0.0.1:14550"], shell=True,stdout=logfile)
 #time.sleep(5)
@@ -71,13 +72,13 @@ print ("Start MavProxy Server...")
 #port_GPS = "/dev/ttyAMA0"
 #ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
 
-#GC socket
+#   GC socket
 BOOT_IP = "192.168.2.1"
 UDP_PORT = 27000
 sock_gc = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
-# Open socket to Boot-pi
+#   Open socket to Boot-pi
 BOOT_IP = "192.168.2.2"
 UDP_PORT = 27000
 sock_boot = socket.socket(socket.AF_INET, # Internet
@@ -89,24 +90,26 @@ connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
 boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
-gps_timestamp = 0
+gps_timestamp = '102311.996'
+
 @boje.on_message('GPS_INPUT')
 def listener(self, name, message):
-    gps_timestamp = message.time_usec
+    gps_timestamp = str(message.time_usec)
 
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
-#except Exception:
+#except Exception as e:
 #    print("Connection Error to Boot-FC")
+#    print('Parse error: {}'.format(e))
 
 while True:
     time.sleep(2)
     print("lat: "+str(boje.location.global_frame))
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
-    print("time= "+str(gps_timestamp))
+    print("time= "+ gps_timestamp)
 #    
-    #GPS_boje = pynmea2.GGA('GP', 'GGA', ('timestamp', str(boje.location.global_frame.lat), lat_dir,str(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', 'geo_sep', 'M', 'age_gps_data', 'ref_station_id'))      #    try:
+    GPS_boje = pynmea2.GGA('GP', 'GGA', (gps_timestamp, str(boje.location.global_frame.lat), lat_dir,str(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
 #        depth = boot.location.global_relative_frame.alt
 #        compass_boot = boot.heading
 #        speed_boot = boot.groundspeed
