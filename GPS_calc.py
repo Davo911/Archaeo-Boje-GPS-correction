@@ -92,9 +92,7 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
 gps_timestamp = '102311.996'
 
-@boje.on_message('GPS_INPUT')
-def listener(self, name, message):
-    gps_timestamp = str(message.time_usec)
+
 
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
@@ -104,6 +102,9 @@ def listener(self, name, message):
 
 while True:
     time.sleep(2)
+    @boje.on_message('GPS_INPUT')
+    def listener(self, name, message):
+        gps_timestamp = str(message.time_usec)
     print("lat: "+str(boje.location.global_frame))
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
