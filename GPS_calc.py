@@ -92,7 +92,7 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
 gps_timestamp = '102311.996'
 
-boje.add_message_listener(‘GPS_INPUT’,receivedPos)
+boje.add_message_listener("GPS_INPUT",receivedPos)
 def receivedPos(self, name, posMsg):
     print ("pos")
 #try:
