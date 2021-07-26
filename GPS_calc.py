@@ -92,21 +92,26 @@ boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
 gps_timestamp = '102311.996'
 
-def receivedPos(self, name, posMsg):
-    print (posMsg)
-boje.add_message_listener("GPS_INPUT",receivedPos)
+# def receivedPos(self, name, posMsg):
+#     print (posMsg)
+# boje.add_message_listener("GPS_INPUT",receivedPos)
 
+# @boje.on_message('GPS_INPUT')
+# def listener(self, name, message):
+#     gps_timestamp = str(message.time_usec)
 #try:
 #    boot = connect(connection_boot, wait_ready=True)
 #except Exception as e:
 #    print("Connection Error to Boot-FC")
 #    print('Parse error: {}'.format(e))
+print("mavlink messages:")
+@boje.on_message('*')
+def listener(self, name, message):
+    print 'message: %s' % message
 
 while True:
     time.sleep(2)
-    @boje.on_message('GPS_INPUT')
-    def listener(self, name, message):
-        gps_timestamp = str(message.time_usec)
+
     print("lat: "+str(boje.location.global_frame))
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
