@@ -64,6 +64,7 @@ def parseArguments():
 
 
 # Start MavProxy
+# mavproxy.py --out 127.0.0.1:14550 --show-errors --baudrate 115200
 #print ("Start MavProxy Server...")
 #logfile = open("./mavprxy.log", "w")
 #server_proc = Popen(["mavproxy.py", "--out", "127.0.0.1:14550"], shell=True,stdout=logfile)
@@ -108,8 +109,8 @@ gps_timestamp = '102311.996'
 print("mavlink messages:")
 @boje.on_message('GPS_RAW_INT')
 def listener(self, name, message):
-    u_time = datetime.fromtimestamp(int(message.time_usec))
-    print(u_time.strftime("%H%M%S"))
+    utc = datetime(1970, 1, 1) + timedelta(seconds=int(message.time_usec))
+    print(utc.strftime("%H%M%S"))
 
 while True:
     time.sleep(2)
