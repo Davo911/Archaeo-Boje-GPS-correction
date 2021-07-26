@@ -1,7 +1,7 @@
 from dronekit import connect, Command, LocationGlobal
 from pymavlink import mavutil
 import io, time, sys, argparse, math, serial, socket, math
-from datetime import datetime
+from datetime import datetime, timedelta
 from subprocess import Popen
 import pynmea2
 
