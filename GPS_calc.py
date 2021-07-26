@@ -1,6 +1,7 @@
 from dronekit import connect, Command, LocationGlobal
 from pymavlink import mavutil
 import io, time, sys, argparse, math, serial, socket, math
+from datetime import datetime
 from subprocess import Popen
 import pynmea2
 
@@ -107,8 +108,8 @@ gps_timestamp = '102311.996'
 print("mavlink messages:")
 @boje.on_message('GPS_RAW_INT')
 def listener(self, name, message):
-    print 'message: %s' % message
-    print 'time: %s' % message.time_usec
+    u_time = datetime.fromtimestamp(message.time_usec)
+    print(u_time.strftime("%H%M%S"))
 
 while True:
     time.sleep(2)
