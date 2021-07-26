@@ -105,9 +105,10 @@ gps_timestamp = '102311.996'
 #    print("Connection Error to Boot-FC")
 #    print('Parse error: {}'.format(e))
 print("mavlink messages:")
-@boje.on_message('GLOBAL_POSITION_INT')
+@boje.on_message('GPS_RAW_INT')
 def listener(self, name, message):
     print 'message: %s' % message
+    print 'time: %s' % message.time_usec
 
 while True:
     time.sleep(2)
