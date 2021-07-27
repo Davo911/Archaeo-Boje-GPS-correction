@@ -109,10 +109,10 @@ gps_timestamp = '102311.996'
 print("mavlink messages:")
 @boje.on_message('GPS_RAW_INT')
 def listener(self, name, message):
-    utc = datetime(1970, 1, 1) + timedelta(seconds=message.time_usec/1000)
-    gps_timestamp = str(message.time_usec/1000)
-    print("Date: "+utc.strftime("%H%M%S"))
-    #print(utc.strftime("%H%M%S"))
+    utc = datetime(1970, 1, 1) + timedelta(seconds=int(message.time_usec)/1000)
+    gps_timestamp = str(int(message.time_usec)/1000)
+    #print("Date: "+utc.strftime("%H%M%S"))
+    print(str(utc)+"==>"+str(int(message.time_usec)/1000))
 
 while True:
     time.sleep(2)
