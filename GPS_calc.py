@@ -92,6 +92,7 @@ connection_boje = '127.0.0.1:14550'
 connection_boot = '192.168.2.2:14550'
 boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
+global gps_timestamp
 gps_timestamp = '102311.996'
 
 # def receivedPos(self, name, posMsg):
@@ -112,7 +113,7 @@ def listener(self, name, message):
     utc = datetime(1970, 1, 1) + timedelta(seconds=int(message.time_usec)/1000)
     gps_timestamp = str(int(message.time_usec)/1000)
     #print("Date: "+utc.strftime("%H%M%S"))
-    print(str(utc)+"==>"+str(int(message.time_usec)/1000))
+    print(str(utc)+"==>"+str(message.time_usec))
 
 while True:
     time.sleep(2)
