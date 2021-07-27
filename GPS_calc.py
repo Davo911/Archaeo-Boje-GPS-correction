@@ -110,7 +110,7 @@ print("mavlink messages:")
 @boje.on_message('GPS_RAW_INT')
 def listener(self, name, message):
     utc = datetime(1970, 1, 1) + timedelta(seconds=message.time_usec)
-    print(str(message.time_usec))
+    gps_timestamp = str(message.time_usec)
     #print(utc.strftime("%H%M%S"))
 
 while True:
@@ -119,7 +119,7 @@ while True:
     #print("lat: "+str(boje.location.global_frame))
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
-    #print("time= "+ gps_timestamp)
+    print("time= "+ gps_timestamp)
 #    
     GPS_boje = pynmea2.GGA('GP', 'GGA', (gps_timestamp, decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
     #print(str(GPS_boje))
