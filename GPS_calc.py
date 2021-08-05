@@ -113,7 +113,7 @@ def listener(self, name, message):
     utc = datetime(1970, 1, 1) + timedelta(seconds=int(message.time_usec)/1000)
     gps_timestamp = str(int(message.time_usec)/1000)
     #print("Date: "+utc.strftime("%H%M%S"))
-    print(str(utc)+"==>durch1000: "+gps_timestamp+"og: "+message.time_usec)
+    print(str(utc)+"==>durch1000: "+gps_timestamp+"og: "+str(message.time_usec))
 
 while True:
     time.sleep(2)
