@@ -131,7 +131,7 @@ while True:
 
 
     print("sending ")
-    sock_boot.sendto(bytes("$GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68"), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes("$GPRMC,150559.00,A,5102.85348,N,01345.01389,E,0.212,,300421,,,A*7C"), (BOOT_IP, BOOT_PORT))
     sock_gc.sendto(bytes("$GPGGA,102310.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68"), (GC_IP, GC_PORT))
 
 
