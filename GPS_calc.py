@@ -132,7 +132,7 @@ while True:
     #print(str(GPS_boje_data))
     #print("sending ")
     #sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
-    sock_gc.sendto(bytes(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
+    sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
 
 
 
