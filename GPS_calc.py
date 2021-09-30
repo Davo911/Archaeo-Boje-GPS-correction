@@ -75,14 +75,14 @@ def parseArguments():
 #ser = serial.Serial(port_GPS,baudrate=9600,timeout=0.5)
 
 #   GC socket
-BOOT_IP = "192.168.2.1"
-UDP_PORT = 27000
+GC_IP = "192.168.2.1"
+GC_PORT = 27000
 sock_gc = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 #   Open socket to Boot-pi
 BOOT_IP = "192.168.2.2"
-UDP_PORT = 27000
+BOOT_PORT = 27000
 sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
@@ -118,12 +118,21 @@ def listener(self, name, message):
 while True:
     time.sleep(2)
 
-    #print("lat: "+str(boje.location.global_frame))
-    lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
-    lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
-    print("time= "+ gps_timestamp)
-    GPS_boje = pynmea2.GGA('GP', 'GGA', (gps_timestamp, decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
+    print("loc: "+str(boje.location.global_frame))
+    #lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
+    #lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
+    #print("time= "+ gps_timestamp)
+    #GPS_boje = pynmea2.GGA('GP', 'GGA', (gps_timestamp, decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
     #print(str(GPS_boje))
+
+
+
+    #print("sending ")
+    #sock_boot.sendto(bytes(str(GPS_boot_new)), (BOOT_IP, BOOT_PORT))
+    #sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
+
+
+
 #        depth = boot.location.global_relative_frame.alt
 #        compass_boot = boot.heading
 #        speed_boot = boot.groundspeed
