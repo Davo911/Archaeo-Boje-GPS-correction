@@ -131,8 +131,8 @@ while True:
     GPS_boje_data = pynmea2.parse("$GPGGA,150559.00,5102.85348,N,01345.01389,E,1,05,2.79,153.2,M,43.7,M,,*59")
     #print(str(GPS_boje_data))
     print("sending ...")
-    #sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
-    sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
+    sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
+    #sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
 
 
 
