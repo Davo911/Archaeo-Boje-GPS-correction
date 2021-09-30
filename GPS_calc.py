@@ -118,8 +118,8 @@ def listener(self, name, message):
 while True:
     time.sleep(2)
 
-    print("lat: "+str(boje.location.global_frame.lat))
-    print("lon: "+str(boje.location.global_frame.lon))
+    #print("lat: "+str(boje.location.global_frame.lat))
+    #print("lon: "+str(boje.location.global_frame.lon))
     
 
     #lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
@@ -130,9 +130,9 @@ while True:
 
 
 
-    #print("sending ")
-    #sock_boot.sendto(bytes(str(GPS_boot_new)), (BOOT_IP, BOOT_PORT))
-    #sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
+    print("sending ")
+    sock_boot.sendto(bytes($GPGGA,102311.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68), (BOOT_IP, BOOT_PORT))
+    sock_gc.sendto(bytes($GPGGA,102310.996,5102.140,N,01344.177,E,1,12,1.0,0.0,M,0.0,M,,*68), (GC_IP, GC_PORT))
 
 
 
