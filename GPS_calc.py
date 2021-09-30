@@ -118,7 +118,10 @@ def listener(self, name, message):
 while True:
     time.sleep(2)
 
-    print("loc: "+str(boje.location.global_frame))
+    print("lat: "+str(boje.location.global_frame.lat))
+    print("lon: "+str(boje.location.global_frame.lon))
+    
+
     #lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     #lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
     #print("time= "+ gps_timestamp)
