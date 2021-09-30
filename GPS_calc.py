@@ -130,7 +130,7 @@ while True:
 
     GPS_boje_data = pynmea2.parse("$GPRMC,150559.00,A,5102.85348,N,01345.01389,E,0.212,,300421,,,A*7C")
     #print(str(GPS_boje_data))
-    #print("sending ")
+    print("sending ...")
     #sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
     sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
 
