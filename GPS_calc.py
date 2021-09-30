@@ -128,7 +128,7 @@ while True:
     #GPS_boje = pynmea2.GGA('GP', 'GGA', (gps_timestamp, decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
     #print(str(GPS_boje))
 
-    GPS_boje_data = pynmea2.parse("$GPRMC,150559.00,A,5102.85348,N,01345.01389,E,0.212,,300421,,,A*7C")
+    GPS_boje_data = pynmea2.parse("$GPGGA,150559.00,5102.85348,N,01345.01389,E,1,05,2.79,153.2,M,43.7,M,,*59")
     #print(str(GPS_boje_data))
     print("sending ...")
     #sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
