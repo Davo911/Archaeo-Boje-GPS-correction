@@ -22,11 +22,17 @@ boje = connect('localhost:14550',"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
 
 while True:
-    time.sleep(0.1)
+    time.sleep(1)
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
 
     GPS_boje = pynmea2.GGA('GP', 'GGA', (str(int(time.time())) , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0.0', 'M', '', '0000'))
+    # $GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,1.77,1.00,1.46*09
+    print("mode:"+ boje.mode)
+    print("fix:"+str(boje.gps_0.fix_type))
+
+    #GSA_boje = pynmea2.GSA('GP', 'GSA', ())
     
-    print(str(GPS_boje))
-    sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+    #print(str(GPS_boje))
+    #sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+
