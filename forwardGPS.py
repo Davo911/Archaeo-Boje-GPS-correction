@@ -28,13 +28,14 @@ while True:
 
     GPS_boje = pynmea2.GGA('GP', 'GGA', (str(int(time.time())) , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0.0', 'M', '', '0000'))
     # $GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,1.77,1.00,1.46*09
-    print("mode:"+ boje.mode.name[1])
-    print("fix:"+str(boje.gps_0.fix_type))
-    print("HDOP:"+str(boje.gps_0.eph ))
-    print("VDOP:"+str(boje.gps_0.epv ))
-    print("GPS:"+str(boje.gps_0 ))
-    #GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),,,,,,,,,,,,,'0',HDOP,VDOP))
+    # print("mode:"+ boje.mode.name[1])
+    # print("fix:"+str(boje.gps_0.fix_type))
+    # print("HDOP:"+str(boje.gps_0.eph ))
+    # print("VDOP:"+str(boje.gps_0.epv ))
+    # print("GPS:"+str(boje.gps_0 ))
+    GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),,,,,,,,,,,,,'0',str(boje.gps_0.eph ),10))
     
     #print(str(GPS_boje))
-    #sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
 
