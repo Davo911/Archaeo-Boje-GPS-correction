@@ -8,7 +8,7 @@ while True:
         for line in f:
             time.sleep(0.05)
             print(line)
-            sock.sendto(bytes(line, 'utf-8'), (sys.argv[2], 27000))
+            sock.sendto(bytes(line, 'utf-8'), (sys.argv[2], 14401))
     
     
     

@@ -18,8 +18,8 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 print ("Connecting...")
-boje = connect('localhost:14550',"baud=57600", wait_ready=False)
-boje.wait_ready(True, timeout=180)
+boje = connect('localhost:14550',"baud=57600")#, wait_ready=False)
+#boje.wait_ready(True, timeout=180)
 
 while True:
     time.sleep(1)
