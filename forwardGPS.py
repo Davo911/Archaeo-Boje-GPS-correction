@@ -35,7 +35,8 @@ while True:
     # print("GPS:"+str(boje.gps_0 ))
     GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),'','','','','','','','','','','','','0',str(boje.gps_0.eph ),10))
     
-    #print(str(GPS_boje))
-    sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
-    sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
+    print(str(GPS_boje))
+    print(str(GSA_boje))
+    #sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+    #sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
 
