@@ -26,7 +26,7 @@ while True:
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
 
-    GPS_boje = pynmea2.GGA('GP', 'GGA', ('', decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
+    GPS_boje = pynmea2.GGA('GP', 'GGA', (int(time.time()) , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), str(boje.location.global_frame.alt), 'M', '0.0', 'M', '', '0000'))
     
     print(str(GPS_boje))
     sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
