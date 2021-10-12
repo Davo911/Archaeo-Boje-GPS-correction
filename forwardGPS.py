@@ -37,6 +37,6 @@ while True:
     
     print(str(GPS_boje))
     print(str(GSA_boje))
-    #sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
-    #sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
 
