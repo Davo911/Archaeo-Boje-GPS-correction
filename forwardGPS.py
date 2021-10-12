@@ -28,7 +28,7 @@ while True:
 
     GPS_boje = pynmea2.GGA('GP', 'GGA', (str(int(time.time())) , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0.0', 'M', '', '0000'))
     # $GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,1.77,1.00,1.46*09
-    print("mode:"+ str(boje.mode))
+    print("mode:"+ boje.mode.name)
     print("fix:"+str(boje.gps_0.fix_type))
 
     #GSA_boje = pynmea2.GSA('GP', 'GSA', ())
