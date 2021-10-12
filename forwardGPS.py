@@ -26,13 +26,15 @@ while True:
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
 
-    GPS_boje = pynmea2.GGA('GP', 'GGA', ('203639.01' , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0.0', 'M', '', '0000'))
+    GPS_boje = pynmea2.GGA('GP', 'GGA', ('203639.01' , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0', 'M', '', '0000'))
 
 #$GPGGA,203639.01,5555.2846,N,1133.1222,E,1,8,0,20,M,0,M,,*7F
 #$GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,1.77,1.00,1.46*09
 
-#$GPGGA,203639.01,05102.1463,N,01344.1368,E,3,7,315,0,M,0.0,M,,0000*5A
-#$GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,0,315,10*12
+#$GPGGA,203639.01,5102.0898,N,1344.0776,E,3,5,225,0,M,0.0,M,,0000*59
+#$GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,0,225,10*10
+
+
 
     GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),'17','15','19','24','32','10','12','25','','','','','0',str(boje.gps_0.eph ),str(10)))
     
