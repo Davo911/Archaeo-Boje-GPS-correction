@@ -30,8 +30,9 @@ while True:
     # $GPGSA,A,3,17,15,19,24,32,10,12,25,,,,,1.77,1.00,1.46*09
     print("mode:"+ boje.mode.name[1])
     print("fix:"+str(boje.gps_0.fix_type))
-
-    #GSA_boje = pynmea2.GSA('GP', 'GSA', ())
+    print("HDOP:"+str(boje.gps_0.eph ))
+    print("VDOP:"+str(boje.gps_0.epv ))
+    #GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),,,,,,,,,,,,,'0',HDOP,VDOP))
     
     #print(str(GPS_boje))
     #sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
