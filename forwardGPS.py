@@ -22,7 +22,7 @@ boje = connect('localhost:14550',"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
 
 while True:
-    time.sleep(1)
+    time.sleep(0.1)
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
 
