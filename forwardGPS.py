@@ -33,7 +33,7 @@ while True:
     # print("HDOP:"+str(boje.gps_0.eph ))
     # print("VDOP:"+str(boje.gps_0.epv ))
     # print("GPS:"+str(boje.gps_0 ))
-    GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),'','','','','','','','','','','','','0',str(boje.gps_0.eph ),10))
+    GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),'','','','','','','','','','','','','0',str(boje.gps_0.eph ),str(10)))
     
     print(str(GPS_boje))
     print(str(GSA_boje))
