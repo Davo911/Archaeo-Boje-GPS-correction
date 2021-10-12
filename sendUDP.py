@@ -1,0 +1,16 @@
+import socket, time
+
+UDP_IP = "192.168.2.2"
+UDP_PORT = 27000
+MESSAGE = "$GPRMC,153315.041,A,3459.65,S,13830.30,E,36.6,165.7,300921,,,*0A\r\n$IIVHW,165.7,T,165.7,M,36.6,N,67.8,K*5F\r\n$GPVTG,165.7,T,165.7,M,36.6,N,67.8,K*44\r\n$IIHDT,165.7,T*27\r\n$GPGLL,3459.65,S,13830.30,E,153315.041,A*2E\r\n$GPGGA,153315.041,3459.65,S,13830.30,E,1,4,2.6,2.0,M,,,,*27\r\n$GPGSA,A,3,8,11,15,22,,,,,,,,,2.3,2.6,0.6*0D\r\n$GPZDA,153315.041,30,09,2021,02,00*5A\r\n!AIVDO,1,1,,A,17PaewhP5far1`OcvNTVN5:N0000,0*31\r\n!AIVDM,1,1,,A,17PaewhP5far1`OcvNTVN5:N0000,0*33\r\n$WIMWD,295.4,T,295.4,M,40.0,N,20.6,M*5A\r\n$WIMWV,70.2,R,32.7,N,A*20\r\n$IIMTW,7.7,C*23\r\n$SDDPT,5.4,0.3*55\r\n$SDDBT,17.8,f,5.4,M,3.0,F*3A\r\n$SDDBK,17.8,f,5.4,M,3.0,F*25\r\n$SDDBS,17.8,f,5.4,M,3.0,F*3D\r\n!AIVDO,2,1,9,A,57Paewh00001<To7;?@plD5<Tl0000000000000U1@:552O?Q2TnA3QF,0*2B\r\n!AIVDO,2,2,9,A,@00000000000002,2*5D\r\n!AIVDM,2,1,9,A,57Paewh00001<To7;?@plD5<Tl0000000000000U1@:552O?Q2TnA3QF,0*29\r\n!AIVDM,2,2,9,A,@00000000000002,2*5F\r\n$IIRPM,E,1,731.4,10.5,A*63\r\n$IIRPM,E,2,612.0,10.5,A*64\r\n"
+
+print("UDP target IP:", UDP_IP)
+print("UDP target port:", UDP_PORT)
+print("message:", MESSAGE)
+
+sock = socket.socket(socket.AF_INET, # Internet
+                     socket.SOCK_DGRAM) # UDP
+while True:
+    time.sleep(1)
+    print("sending...")
+    sock.sendto(MESSAGE.encode(), (UDP_IP, UDP_PORT))
