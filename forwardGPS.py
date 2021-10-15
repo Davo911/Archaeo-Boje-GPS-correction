@@ -22,7 +22,7 @@ boje = connect('localhost:14550',"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
 
 while True:
-    time.sleep(0.2)
+    time.sleep(0.1)
     lat_dir = 'N' if boje.location.global_frame.lat > 0 else 'S'
     lon_dir = 'E' if boje.location.global_frame.lon > 0 else 'W'
     # GPS_boje = pynmea2.GGA('GP', 'GGA', ('203639.01' , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(boje.gps_0.eph), '0', 'M', '0', 'M', '', ''))
