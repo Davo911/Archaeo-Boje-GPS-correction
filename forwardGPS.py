@@ -40,8 +40,8 @@ while True:
 # $GPGSA,A,3,01,02,03,04,05,06,07,08,09,10,11,12,1.0,1.0,1.0*30
 
     
-    print(str(GPS_boje))
-    print(str(GSA_boje))
-    sock_boot.sendto(bytes(str(GPS_boje)), (BOOT_IP, BOOT_PORT))
-    sock_boot.sendto(bytes(str(GSA_boje)), (BOOT_IP, BOOT_PORT))
+    print(str(boje.location.global_frame.lon))
+    print(str(boje.location.global_frame.lat))
+    sock_boot.sendto(bytes(str(GPS_boje)+"\n"), (BOOT_IP, BOOT_PORT))
+    sock_boot.sendto(bytes(str(GSA_boje)+"\n"), (BOOT_IP, BOOT_PORT))
 
