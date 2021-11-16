@@ -8,9 +8,9 @@ import pynmea2
 def add_offset(lng, lat, ang, os):
 
     #CALCULATION
-    lat0 = math.cos(math.PI / 180.0 * lat)
-    lng_new = lng + (180/math.PI) * (os / 6378137) / math.cos(lat0) * math.cos(ang)
-    lat_new = lat  + (180/math.PI) * (os / 6378137) * math.sin(ang)
+    lat0 = math.cos(math.pi / 180.0 * lat)
+    lng_new = lng + (180/math.pi) * (os / 6378137) / math.cos(lat0) * math.cos(ang)
+    lat_new = lat  + (180/math.pi) * (os / 6378137) * math.sin(ang)
 
     return [lng_new, lat_new]
 
