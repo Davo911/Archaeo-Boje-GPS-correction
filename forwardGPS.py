@@ -5,14 +5,14 @@ from datetime import datetime
 from subprocess import Popen
 import pynmea2
 
-def add_offset(lng, lat, ang, os):
+def add_offset(lat,lng, ang, os):
 
     #CALCULATION
     lat0 = math.cos(math.pi / 180.0 * lat)
     lng_new = lng + (180/math.pi) * (os / 6378137) / math.cos(lat0) * math.cos(ang)
     lat_new = lat  + (180/math.pi) * (os / 6378137) * math.sin(ang)
 
-    return [lng_new, lat_new]
+    return [lat_new,lng_new]
 
 def decTodms(deg):
      d = int(deg)
@@ -43,9 +43,9 @@ while True:
     
     offset = math.sqrt((string_length**2)-(depth**2))  
 
-    new_lnglat = add_offset(longitude,latitude,angle,offset)
-    print("old: "+ str([longitude,latitude]))
-    print("new: "+ str(new_lnglat))
+    new_latlng = add_offset(latitude,longitude,angle,offset)
+    print("old: "+ str([latitude,longitude]))
+    print("new: "+ str(new_latlng))
     #GPS_boje = pynmea2.GGA('GP', 'GGA', ('203639.01' , decTodms(boje.location.global_frame.lat), lat_dir,decTodms(boje.location.global_frame.lon), lon_dir, str(boje.gps_0.fix_type), str(boje.gps_0.satellites_visible), str(float(boje.gps_0.eph)/100), '0', 'M', '0', 'M', '', ''))
     #GSA_boje = pynmea2.GSA('GP', 'GSA', (boje.mode.name[1], str(boje.gps_0.fix_type),'17','15','19','24','32','10','12','25','','','','','0',str(boje.gps_0.eph ),str(10)))
 
