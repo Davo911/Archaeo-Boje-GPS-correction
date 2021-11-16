@@ -36,7 +36,7 @@ while True:
     latitude = boje.location.global_frame.lat
     longitude = boje.location.global_frame.lon
     depth = 3                                           #TODO: How to read I2C Pressure Sensor
-    angle = math.toRadians(boje.heading)                #TODO: Angle == Boot.angle?
+    angle = math.radians(boje.heading)                #TODO: Angle == Boot.angle?
     lat_dir = 'N' if latitude > 0 else 'S'
     lon_dir = 'E' if longitude > 0 else 'W'
 
