@@ -29,14 +29,14 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
 print ("Connecting...")
 boje = connect('localhost:14550',"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
-string_length = 2
+string_length = 2.0
 while True:
     time.sleep(2)
 
     latitude = boje.location.global_frame.lat
     longitude = boje.location.global_frame.lon
-    depth = 3                                           #TODO: How to read I2C Pressure Sensor
-    angle = math.radians(boje.heading)                #TODO: Angle == Boot.angle?
+    depth = 1.2                                           #TODO: How to read I2C Pressure Sensor
+    angle = math.radians(boje.heading)                    #TODO: Angle == Boot.angle?
     lat_dir = 'N' if latitude > 0 else 'S'
     lon_dir = 'E' if longitude > 0 else 'W'
 
