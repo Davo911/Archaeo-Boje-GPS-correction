@@ -34,9 +34,6 @@ def parseArguments():
         print("No String length defined ( -s=2.0 ) -2")
         return 2.0
 
-
-
-
 def start_mavProxy():
     # mavproxy.py --out 127.0.0.1:14550 --show-errors --baudrate 115200
     print ("Start MavProxy Server...")
@@ -69,8 +66,8 @@ start_mavProxy()
 print ("Connecting...")
 connection_boje = 'localhost:14550'
 connection_boot = '192.168.2.2:14550'
-boje = connect(connection_boje,"baud=57600")#, wait_ready=False)
-#boje.wait_ready(True, timeout=180)
+boje = connect(connection_boje,"baud=57600", wait_ready=False)
+boje.wait_ready(True, timeout=180)
 
 try:
     boot = connect(connection_boot, wait_ready=True)
