@@ -4,6 +4,9 @@ import io, time, sys, argparse, math, serial, socket, math
 from datetime import datetime, timedelta
 from subprocess import Popen
 import pynmea2
+import requests
+
+alt_url = "http://192.168.2.2:4777/mavlink/VFR_HUD/alt"
 
 
 def decTodms(deg):
@@ -62,22 +65,24 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Connect to the MavProxies
-# start_mavProxy()
+#start_mavProxy()
 print ("Connecting boje...")
 # connection_boje = 'localhost:14550'
 # boje = connect(connection_boje,"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
 
-connection_boot = '192.168.2.2:14550'
-boot = None
-try:
-    boot = connect(connection_boot, wait_ready=True)
-except Exception as e:
-    print("Connection Error to Boot-FC")
-    print('Parse error: {}'.format(e))
+# connection_boot = 'tcp:192.168.2.2:5760'
+# boot = None
+# try:
+#     boot = connect(connection_boot, wait_ready=True)
+# except Exception as e:
+#     print("Connection Error to Boot-FC")
+#     print('Parse error: {}'.format(e))
 
-while boot is not None:
+while True:
     time.sleep(1)
+    resp = requests.get(alt_url)
+    print(resp)
 
     #get BOJE parameter
     # latitude = boje.location.global_frame.lat
@@ -87,9 +92,9 @@ while boot is not None:
     # angle_boje = math.radians(boje.heading)
 
     #get BOOT parameter
-    depth = boot.location.global_relative_frame.alt
+    #depth = boot.location.global_relative_frame.alt
     #print("lat|lng: " + str(latitude) + " | " + str(longitude))
-    print("depth: "+ depth)
+    #print("depth: "+ depth)
 
     # offset = math.sqrt((string_length**2)-(depth**2))
     # GPS_boje_data = pynmea2.parse("$GPGGA,150559.00,5102.85348,N,01345.01389,E,1,05,2.79,153.2,M,43.7,M,,*59")
