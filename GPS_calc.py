@@ -75,7 +75,7 @@ except Exception as e:
     print("Connection Error to Boot-FC")
     print('Parse error: {}'.format(e))
 
-while True:
+while boot and boje:
     time.sleep(1)
 
     #get BOJE parameter
