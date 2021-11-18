@@ -68,14 +68,14 @@ connection_boje = 'localhost:14550'
 boje = connect(connection_boje,"baud=57600")#, wait_ready=False)
 #boje.wait_ready(True, timeout=180)
 
-connection_boot = '192.168.2.2:14550'
-try:
-    boot = connect(connection_boot, wait_ready=True)
-except Exception as e:
-    print("Connection Error to Boot-FC")
-    print('Parse error: {}'.format(e))
+# connection_boot = '192.168.2.2:14550'
+# try:
+#     boot = connect(connection_boot, wait_ready=True)
+# except Exception as e:
+#     print("Connection Error to Boot-FC")
+#     print('Parse error: {}'.format(e))
 
-while boot is not None and boje is not None:
+while boje is not None:
     time.sleep(1)
 
     #get BOJE parameter
@@ -86,9 +86,9 @@ while boot is not None and boje is not None:
     angle_boje = math.radians(boje.heading)
 
     #get BOOT parameter
-    depth = boot.location.global_relative_frame.alt
+    # depth = boot.location.global_relative_frame.alt
     print("lat|lng: " + str(latitude) + " | " + str(longitude))
-    print("depth: "+ depth)
+    # print("depth: "+ depth)
 
     # offset = math.sqrt((string_length**2)-(depth**2))
     # GPS_boje_data = pynmea2.parse("$GPGGA,150559.00,5102.85348,N,01345.01389,E,1,05,2.79,153.2,M,43.7,M,,*59")
