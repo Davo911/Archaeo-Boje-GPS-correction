@@ -69,11 +69,8 @@ print ("Connecting boje...")
 #boje.wait_ready(True, timeout=180)
 
 connection_boot = '192.168.2.2:14550'
-try:
-    boot = connect(connection_boot, wait_ready=True)
-except Exception as e:
-    print("Connection Error to Boot-FC")
-    print('Parse error: {}'.format(e))
+boot = connect(connection_boot, wait_ready=False)
+
 
 while boot is not None:
     time.sleep(1)
