@@ -78,17 +78,19 @@ except Exception as e:
     print('Parse error: {}'.format(e))
 
 while True:
-    time.sleep(0.1)
+    time.sleep(1)
 
-    # #get BOJE parameter
-    # latitude = boje.location.global_frame.lat
-    # longitude = boje.location.global_frame.lon
-    # lat_dir = 'N' if latitude > 0 else 'S'
-    # lon_dir = 'E' if longitude > 0 else 'W'
-    # angle_boje = math.radians(boje.heading)
+    #get BOJE parameter
+    latitude = boje.location.global_frame.lat
+    longitude = boje.location.global_frame.lon
+    lat_dir = 'N' if latitude > 0 else 'S'
+    lon_dir = 'E' if longitude > 0 else 'W'
+    angle_boje = math.radians(boje.heading)
 
-    # #get BOOT parameter
-    # depth = boot.location.global_relative_frame.alt
+    #get BOOT parameter
+    depth = boot.location.global_relative_frame.alt
+    print("lat|lng: " + str(latitude) + " | " + str(longitude))
+    print("depth: "+ depth)
 
     # offset = math.sqrt((string_length**2)-(depth**2))
     # GPS_boje_data = pynmea2.parse("$GPGGA,150559.00,5102.85348,N,01345.01389,E,1,05,2.79,153.2,M,43.7,M,,*59")
