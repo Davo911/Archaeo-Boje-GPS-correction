@@ -65,8 +65,8 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
 # start_mavProxy()
 print ("Connecting boje...")
 connection_boje = 'localhost:14550'
-boje = connect(connection_boje,"baud=57600", wait_ready=False)
-boje.wait_ready(True, timeout=180)
+boje = connect(connection_boje,"baud=57600")#, wait_ready=False)
+#boje.wait_ready(True, timeout=180)
 
 connection_boot = '192.168.2.2:14550'
 try:
