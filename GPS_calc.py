@@ -69,6 +69,7 @@ print ("Connecting boje...")
 #boje.wait_ready(True, timeout=180)
 
 connection_boot = '192.168.2.2:14550'
+boot = None
 try:
     boot = connect(connection_boot, wait_ready=True)
 except Exception as e:
