@@ -42,7 +42,7 @@ def start_mavProxy():
     print ("Start MavProxy Server...")
     logfile = open("./mavprxy.log", "w")
     server_proc = Popen(["mavproxy.py", "--out", "udp:127.0.0.1:14550"], shell=True,stdout=logfile)
-    time.sleep(5)
+    time.sleep(15)
 
 ###MAIN ENTRY POINT###
 string_length = parseArguments()
