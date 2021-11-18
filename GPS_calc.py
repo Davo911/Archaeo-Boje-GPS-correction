@@ -62,13 +62,13 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Connect to the MavProxies
-start_mavProxy()
-print ("Connecting...")
+# start_mavProxy()
+print ("Connecting boje...")
 connection_boje = 'localhost:14550'
-connection_boot = '192.168.2.2:14550'
 boje = connect(connection_boje,"baud=57600", wait_ready=False)
 boje.wait_ready(True, timeout=180)
 
+connection_boot = '192.168.2.2:14550'
 try:
     boot = connect(connection_boot, wait_ready=True)
 except Exception as e:
