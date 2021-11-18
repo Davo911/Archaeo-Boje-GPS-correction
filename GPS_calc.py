@@ -65,6 +65,7 @@ sock_boot = socket.socket(socket.AF_INET, # Internet
                      socket.SOCK_DGRAM) # UDP
 
 # Connect to the MavProxies
+start_mavProxy()
 print ("Connecting...")
 connection_boje = 'localhost:14550'
 connection_boot = '192.168.2.2:14550'
