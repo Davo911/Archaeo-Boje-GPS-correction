@@ -75,7 +75,7 @@ except Exception as e:
     print("Connection Error to Boot-FC")
     print('Parse error: {}'.format(e))
 
-while boot and boje:
+while boot is not None and boje is not None:
     time.sleep(1)
 
     #get BOJE parameter
@@ -97,7 +97,7 @@ while boot and boje:
     # sock_boot.sendto(bytes(str(GPS_boje_data)), (BOOT_IP, BOOT_PORT))
     # #sock_gc.sendto(bytes(str(GPS_boje_data)), (GC_IP, GC_PORT))
 
-
+print("Connection lost")
 
 
 
